@@ -7,6 +7,7 @@ require('dotenv').config();
 
 const path = require('path');
 
+const usersModel = require('./models/users.mongo');
 const authRouter = require('./routes/auth/auth.router');
 
 const app = express();
@@ -17,8 +18,17 @@ const googleConfig = {
   callbackURL: process.env.CALLBACK_URL
 }
 
-function verify(accessToken, refreshToken, profile, done) {
-  console.log('Google Profile:', profile);
+async function verify(accessToken, refreshToken, profile, done) {
+  // console.log('Google Profile:', profile);
+  console.log('Email:', profile.emails[0].value);
+  await usersModel.findOneAndUpdate({
+    email: profile.emails[0].value
+  }, {
+    displayName: profile.displayName,
+    email: profile.emails[0].value,
+  }, {
+    upsert: true
+  });
   done(null, profile);
 }
 

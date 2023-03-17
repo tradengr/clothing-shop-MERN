@@ -11,6 +11,7 @@ const usersSchema = new Schema({
   },
   createdAt: {
     type: Date,
+    default: new Date(),
     required: true
   }
 });

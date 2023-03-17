@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 require('dotenv').config();
 
-mongoose.connection.once('open', () => {
+mongoose.connection.once('open', () => { 
   console.log('Connected to MongoDB');
 });
 mongoose.connection.on('error', (err) => {
