@@ -19,16 +19,18 @@ const googleConfig = {
 }
 
 async function verify(accessToken, refreshToken, profile, done) {
-  // console.log('Google Profile:', profile);
-  console.log('Email:', profile.emails[0].value);
+  const email = profile.emails[0].value;
+  const displayname = profile.displayName;
+
   await usersModel.findOneAndUpdate({
-    email: profile.emails[0].value
+    email: email
   }, {
-    displayName: profile.displayName,
-    email: profile.emails[0].value,
+    displayName: displayname,
+    email: email
   }, {
     upsert: true
   });
+
   done(null, profile);
 }
 
