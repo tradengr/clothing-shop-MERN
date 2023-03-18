@@ -13,7 +13,11 @@ const usersSchema = new Schema({
     type: Date,
     default: new Date(),
     required: true
+  },
+  password: {
+    type: String,
+    required: false
   }
 });
 
-module.exports = model('User', usersSchema);
+module.exports = model('GoogleUser', usersSchema);

@@ -1,59 +1,39 @@
-import { useState } from "react";
+import useSignup from '../../hooks/useSignup';
+
 
 const SignupForm = () => {
-  const defaultFormFields = {
-    displayName: '',
-    email: '',
-    password: '',
-    confirmPassword: ''
-  }
-
-  const [formFields, setFormFields] = useState(defaultFormFields);
-  const { displayName, email, password, confirmPassword } = formFields;
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormFields({ ...formFields, [name]: value })
-  }
-  console.log(formFields);
-
+  const { submitSignup } = useSignup();
+  
   return (
     <div>
       <h1>I do not have a account</h1>      
       <h2>Sign up with your email and password</h2>
-      <form>
+      <form onSubmit={submitSignup}>
         <label>Display Name</label>
         <input 
           type='text' 
           name='displayName' 
-          value={displayName} 
-          onChange={handleChange} 
           required 
         />
         <label>Email</label>
         <input 
           type='email' 
-          name='email' 
-          value={email} 
-          onChange={handleChange} 
+          name='email'  
           required 
         />
         <label>Password</label>
         <input 
           type='password' 
-          name='password' 
-          value={password} 
-          onChange={handleChange} 
+          name='password'  
           required 
         />
         <label>Confirm Password</label>
         <input 
           type='password' 
-          name='confirmPassword' 
-          value={confirmPassword} 
-          onChange={handleChange} 
+          name='confirmPassword'  
           required 
         />
+        <button type="submit">Sign Up</button>
       </form>
     </div>
   );
