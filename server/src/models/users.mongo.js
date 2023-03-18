@@ -20,4 +20,4 @@ const usersSchema = new Schema({
   }
 });
 
-module.exports = model('GoogleUser', usersSchema);
+module.exports = model('User', usersSchema);
