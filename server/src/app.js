@@ -1,66 +1,113 @@
 const express = require('express');
-const helmet = require('helmet');
+// const helmet = require('helmet');
 const cors = require('cors');
 const passport = require('passport');
-const { Strategy } = require('passport-google-oauth20');
-require('dotenv').config();
+// const cookieSession = require('cookie-session');
+const session = require('express-session');
+// const { Strategy } = require('passport-google-oauth20');
+// require('dotenv').config();
 
 const path = require('path');
 
-const usersModel = require('./models/users.mongo');
+const { passportConfig } = require('./utils/passport/passport.utils');
+// const usersModel = require('./models/users.mongo');
 const authRouter = require('./routes/auth/auth.router');
 const signupRouter = require('./routes/signup/signup.route');
-const signinRouter = require('./routes/signin/signin.router');
+// const signinRouter = require('./routes/signin/signin.router');
 
 const app = express();
 
-const googleConfig = {
-  clientID: process.env.CLIENT_ID,
-  clientSecret: process.env.CLIENT_SECRET,
-  callbackURL: process.env.CALLBACK_URL
-}
+passportConfig(passport);
 
-async function verify(accessToken, refreshToken, profile, done) {
-  const email = profile.emails[0].value;
-  const displayname = profile.displayName;
+// const googleConfig = {
+//   clientID: process.env.CLIENT_ID,
+//   clientSecret: process.env.CLIENT_SECRET,
+//   callbackURL: process.env.CALLBACK_URL
+// }
 
-  await usersModel.findOneAndUpdate({
-    email: email
-  }, {
-    displayName: displayname,
-    email: email
-  }, {
-    upsert: true
-  });
+// async function verify(accessToken, refreshToken, profile, done) {
+//   const email = profile.emails[0].value;
+//   const displayname = profile.displayName;
 
-  done(null, profile);
-}
+//   await usersModel.findOneAndUpdate({
+//     email: email
+//   }, {
+//     displayName: displayname,
+//     email: email
+//   }, {
+//     upsert: true
+//   });
 
-passport.use(new Strategy(googleConfig, verify))
+//   done(null, profile);
+// }
 
-app.use(helmet());
+// passport.use(new Strategy(googleConfig, verify))
+
+// function authenticate(req, res, next) {
+//   if (!req.isAuthenticated)
+//     return res.redirect('/signin');
+//   next();
+// }
+// function reAuthenticate(req, res, next) {
+//   if (req.isAuthenticated)
+//     return res.redirect('/');
+//   next();
+// }
+
+// app.use(helmet());
+// app.use(cookieSession({
+//   name: 'session',
+//   keys: [ process.env.COOKIE_KEY1, process.env.COOKIE_KEY2 ], 
+//   maxAge: 1000 * 60 * 60 * 24
+// }))
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: false,
+  cookie: { secure: true }
+}));
 app.use(passport.initialize());
+app.use(passport.session());
 app.use(cors());
 app.use(express.static(path.join(__dirname, '..', 'public')));
 app.use(express.json());
 
-// Middleware that checks if user is authenticated before req route
-function checkLoggedIn(req, res, next) {
-  const isLoggedIn = true; //TODO
-  if (!isLoggedIn) {
-    return res.status(401).json({
-      error: 'Must log in to continue'
-    });
-  }
-  next();
-}
-
 app.use('/auth', authRouter);
 app.use('/signup', signupRouter);
-app.use('/signin', signinRouter);
 
-app.get('/*', (req, res) => {
-  return res.status(200).sendFile(path.join(__dirname, '..', 'public', 'index.html'));
+app.post('/signin', (req, res, next) => {
+  passport.authenticate('local', function(err, user, info) {
+    if (err) {
+      return next(err); // will generate a 500 error
+    }
+    // Generate a JSON response reflecting authentication status
+    if (! user) {
+      return res.status(401).send({ success : false, message : 'Authentication failed' });
+    }
+    req.login(user, (err) => {
+      if(err){
+        return next(err);
+      }
+      return res.send({ success : true, message : 'authentication succeeded' });        
+    });
+  })(req, res, next);
 });
+
+// app.post('/signin', passport.authenticate('local', {
+//   successRedirect: '/',
+//   failureRedirect: '/signin',
+// }));
+
+
+app.post('/signout', (req, res, next) => {
+  req.logout(err => {
+    if (err) return next(err);
+    res.redirect('http://localhost:8000/');
+  });
+})
+
+// app.get('/*', (req, res) => {
+//   return res.status(200).sendFile(path.join(__dirname, '..', 'public', 'index.html'));
+// });
 
 module.exports = app;

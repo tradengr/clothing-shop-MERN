@@ -20,7 +20,7 @@ async function httpSubmitSignin(user) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(user)
-    });
+    })
   } catch (err) {
     console.error(err);
   }

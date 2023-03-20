@@ -1,13 +1,21 @@
+const bcrypt = require('bcrypt');
+
 const usersModel = require('./users.mongo');
 
 async function createUser(user) {
   const { displayName, email, password } = user;
 
-  return await usersModel.create({
-    displayName: displayName,
-    email: email,
-    password: password
-  });
+  try {
+    const hashedPassword = await bcrypt.hash(password, 10);
+  
+    return await usersModel.create({
+      displayName: displayName,
+      email: email,
+      password: hashedPassword
+    });
+  } catch (err) {
+    console.error(err);
+  }
 }
 
 async function submitSignup(user) {

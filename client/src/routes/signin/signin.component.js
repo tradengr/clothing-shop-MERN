@@ -8,6 +8,9 @@ const Signin = () => {
       <SigninForm/>
       <a href='/auth/google'>Sign In with Google</a>
       <SignupForm/>
+      <form action="/signout" method="post">
+        <button type="submit">Sign Out</button>
+      </form>
     </div>
   );
 };

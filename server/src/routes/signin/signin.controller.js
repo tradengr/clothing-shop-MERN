@@ -1,7 +1,9 @@
-function httpSubmitSignin(req, res) {
-  
-}
+// function httpSubmitSignin(req, res) {
+//   const { email, password } = req.body;
 
-module.exports = {
-  httpSubmitSignin
-}
+
+// }
+
+// module.exports = {
+//   httpSubmitSignin
+// }
