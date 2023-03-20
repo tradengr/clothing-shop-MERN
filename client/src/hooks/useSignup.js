@@ -1,7 +1,6 @@
 import { httpSubmitSignup } from '../apis/backendAPI';
 
 const useSignup = () => {
-  // TODO: move to another folder
   const submitSignup = async (event) => {
     event.preventDefault();
   

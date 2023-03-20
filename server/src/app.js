@@ -10,6 +10,7 @@ const path = require('path');
 const usersModel = require('./models/users.mongo');
 const authRouter = require('./routes/auth/auth.router');
 const signupRouter = require('./routes/signup/signup.route');
+const signinRouter = require('./routes/signin/signin.router');
 
 const app = express();
 
@@ -56,6 +57,7 @@ function checkLoggedIn(req, res, next) {
 
 app.use('/auth', authRouter);
 app.use('/signup', signupRouter);
+app.use('/signin', signinRouter);
 
 app.get('/*', (req, res) => {
   return res.status(200).sendFile(path.join(__dirname, '..', 'public', 'index.html'));
