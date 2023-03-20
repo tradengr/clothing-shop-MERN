@@ -1,18 +1,17 @@
 import SigninForm from "../../components/signinForm/signinForm.component";
 import SignupForm from "../../components/signupForm/signupForm.component";
+import './authentication.styles.scss';
 
-const Signin = () => {
+const Authentication = () => {
   return (
-    <div>
-      <h1>SIGN IN PAGE</h1>
+    <div className="sign-in-up-container">
       <SigninForm/>
-      <a href='/auth/google'>Sign In with Google</a>
       <SignupForm/>
-      <form action="/signout" method="post">
+      {/* <form action="/signout" method="post">
         <button type="submit">Sign Out</button>
-      </form>
+      </form> */}
     </div>
   );
 };
 
-export default Signin;
+export default Authentication;

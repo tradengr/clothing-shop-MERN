@@ -5,7 +5,7 @@ import {
 
 import NavBar from './routes/navbar/navbar.component';
 import Home from "./routes/home/home.component";
-import Signin from './routes/signin/signin.component';
+import Authentication from './routes/authentication/authentication.component';
 
 const Shop = () => {
   return <h1>Shop Page</h1>
@@ -16,7 +16,7 @@ const App = () => {
     <Routes>
       <Route path='/' element={<NavBar/>} >
         <Route index element={<Home/>} />
-        <Route path='/signin' element={<Signin/>} />
+        <Route path='/signin' element={<Authentication/>} />
         <Route path='/shop' element={<Shop/>} />
       </Route>
     </Routes>
