@@ -5,15 +5,23 @@ const FormInput = ({ label, ...otherProps }) => {
     <div className='group'>
       <input className='form-input' {...otherProps} />
       {label && (
-        <label
-          className={`${
-            otherProps.value ? 'shrink' : ''
-          } form-input-label`}
-        >
+        <label className='shrink form-input-label'>
           {label}
         </label>
       )}
-    </div>
+    </div> 
+    // <div className='group'>
+    //   <input className='form-input' {...otherProps} />
+    //   {label && (
+    //     <label
+    //       className={`${
+    //         otherProps.value ? 'shrink' : ''
+    //       } form-input-label`}
+    //     >
+    //       {label}
+    //     </label>
+    //   )}
+    // </div> 
   );
 };
 

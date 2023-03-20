@@ -2,7 +2,7 @@ const express = require('express');
 const passport = require('passport');
 
 const {
-  httpGetGoogleCallback,
+  httpSubmitSignin,
   httpGetLogout
 } = require('./auth.controller');
 
@@ -20,7 +20,10 @@ const passportAuthenticateCallback = passport.authenticate('google', {
 
 authRouter.get('/google', passportAuthenticateSignIn);
 
-authRouter.get('/google/callback', passportAuthenticateCallback, httpGetGoogleCallback);
+authRouter.get('/google/callback', passportAuthenticateCallback);
+// authRouter.get('/google/callback', passportAuthenticateCallback, httpGetGoogleCallback);
+
+authRouter.post('/local', httpSubmitSignin);
 
 authRouter.get('/logout', httpGetLogout);
 

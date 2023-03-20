@@ -1,16 +1,16 @@
 const LocalStrategy = require('passport-local').Strategy;
-// const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const bcrypt = require('bcrypt');
 require('dotenv').config();
 
 const usersModel = require('../../models/users.mongo');
 
 function passportConfig(passport) {
-  // const googleConfig = {
-  //   clientID: process.env.CLIENT_ID,
-  //   clientSecret: process.env.CLIENT_SECRET,
-  //   callbackURL: process.env.CALLBACK_URL
-  // }
+  const googleConfig = {
+    clientID: process.env.CLIENT_ID,
+    clientSecret: process.env.CLIENT_SECRET,
+    callbackURL: process.env.CALLBACK_URL
+  }
   
   async function verifyLocal(email, password, done) {
     try {
@@ -29,21 +29,21 @@ function passportConfig(passport) {
     }
   }
 
-  // async function verifyGoogle(accessToken, refreshToken, profile, done) {
-  //   const email = profile.emails[0].value;
-  //   const displayname = profile.displayName;
+  async function verifyGoogle(accessToken, refreshToken, profile, done) {
+    const email = profile.emails[0].value;
+    const displayname = profile.displayName;
   
-  //   await usersModel.findOneAndUpdate({
-  //     email: email
-  //   }, {
-  //     displayName: displayname,
-  //     email: email
-  //   }, {
-  //     upsert: true
-  //   });
+    await usersModel.findOneAndUpdate({
+      email: email
+    }, {
+      displayName: displayname,
+      email: email
+    }, {
+      upsert: true
+    });
   
-  //   done(null, profile);
-  // }
+    done(null, profile);
+  }
   
   const getUserById = async (id) => {
     return await usersModel.findOne({
@@ -52,7 +52,7 @@ function passportConfig(passport) {
   }
 
   passport.use(new LocalStrategy({ usernameField: 'email' }, verifyLocal));
-  // passport.use(new GoogleStrategy(googleConfig, verifyGoogle));
+  passport.use(new GoogleStrategy(googleConfig, verifyGoogle));
   passport.serializeUser((user, done) => done(null, user.id));
   passport.deserializeUser((id, done) => done(null, getUserById(id)));
 }

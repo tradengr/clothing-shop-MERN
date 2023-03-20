@@ -14,7 +14,7 @@ async function httpSubmitSignup(user) {
 
 async function httpSubmitSignin(user) {
   try {
-    return await fetch('http://localhost:8000/signin', {
+    return await fetch('http://localhost:8000/auth/local', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json'
