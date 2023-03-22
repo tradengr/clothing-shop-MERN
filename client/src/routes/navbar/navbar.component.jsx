@@ -1,41 +1,45 @@
 import { useContext } from "react";
-import { Link, Outlet } from "react-router-dom";
-import axios from 'axios';
+import { Link } from "react-router-dom";
 
 import { UserContext } from "../../contexts/user.contexts";
+import { CartContext } from "../../contexts/cart.context";
+import { httpSignoutUser } from "../../apis/backendAPI";
 import { ReactComponent as Logo } from '../../assets/crown.svg';
+import CartIcon from "../../components/cartIcon/cartIcon.component";
+import CartDropdown from "../../components/cartDropdown/cartDropdown.component";
 
 import './navbar.styles.scss';
 
 const NavBar = () => {
   const currentUser = useContext(UserContext);
+  console.log(currentUser)
 
-  const handleSignOut = async () => {
-    const response = await axios.delete('http://localhost:8000/signout', {
-      withCredentials: true
-    });
+  const { isCartOpen } = useContext(CartContext)
 
-    if (response.status === 200)
-      window.location.replace('/auth');
-  }
+  // const viewCart = (event) => {
+  //   // setIsCartOpen(!isCartOpen);
+  //   console.log('click')
+  // }
 
   return (
     <>
       <div className="navigation">
         <Link className="logo-container" to='/'>
-          <Logo/>
+          <Logo className="logo-icon"/>
         </Link>
         <div className="nav-links-container">
           <Link className="nav-link" to='/shop'>
             SHOP
           </Link>
           {currentUser 
-            ? (<Link className='nav-link' onClick={handleSignOut}>SIGN OUT</Link>)
+            ? (<Link className='nav-link' onClick={httpSignoutUser}>SIGN OUT</Link>)
             : (<Link className='nav-link' to='/auth'>SIGN IN</Link>)
           }
+          <CartIcon />
         </div>
+        {isCartOpen ? (<CartDropdown/>) : null}
       </div>
-      <Outlet />
+      {/* <Outlet /> */}
     </>
   )
 }
