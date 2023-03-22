@@ -1,5 +1,5 @@
 const express = require('express');
-const helmet = require('helmet');
+// const helmet = require('helmet');
 const cors = require('cors');
 const passport = require('passport');
 const session = require('express-session');
@@ -11,7 +11,7 @@ const authRouter = require('./routes/auth/auth.router');
 const signupRouter = require('./routes/signup/signup.route');
 const app = express();
 
-passportConfig(passport);
+// passportConfig(passport);
 
 // function authenticate(req, res, next) {
 //   if (!req.isAuthenticated)
@@ -24,26 +24,33 @@ passportConfig(passport);
 //   next();
 // }
 
-app.use(helmet());
+// app.use(helmet());
+app.use(express.json());
+app.use(cors({
+  origin: 'http://localhost:3000',
+  credentials: true,
+}));
 app.use(session({
-  secret: 'keyboard cat',
+  secret: 'supersecret',
   resave: false,
   saveUninitialized: false,
-  cookie: { secure: true }
+  cookie: { maxAge: 24 * 60 * 60 * 1000 }
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(cors());
-app.use(express.static(path.join(__dirname, '..', 'public')));
-app.use(express.json());
-
+passportConfig(passport);
+// app.use(express.static(path.join(__dirname, '..', 'public')));
 app.use('/auth', authRouter);
 app.use('/signup', signupRouter);
 
-app.post('/signout', (req, res, next) => {
-  req.logout(err => {
+app.get('/user', (req, res) => {
+  return res.status(200).json(req.user);
+})
+
+app.delete('/signout', (req, res, next) => {
+  req.logOut(err => {
     if (err) return next(err);
-    res.redirect('http://localhost:8000/');
+    res.status(200).json({ ok: 'Success' });
   });
 })
 

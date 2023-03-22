@@ -1,7 +1,11 @@
+// import { useContext } from "react";
+
+// import { UserContext } from "../contexts/user.contexts";
 import { httpSubmitSignin } from "../apis/backendAPI";
 
-
 const useSignin = () => {
+  // const { setCurrentUser } = useContext(UserContext);
+
   const submitSignin = async (event) => {
     event.preventDefault();
 
@@ -15,10 +19,12 @@ const useSignin = () => {
     }
 
     const response = await httpSubmitSignin(user);
-    console.log(response);
-    if (response.ok) {
-      
-    }
+    if (response.status === 200)
+      window.location.replace('/');
+    // const userData = await response.json();
+    // console.log('usesignin', userData);
+    // setCurrentUser(userData);
+
   }
 
   return {

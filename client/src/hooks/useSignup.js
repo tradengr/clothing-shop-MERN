@@ -1,6 +1,11 @@
+// import { useContext } from 'react';
+
+// import { UserContext } from '../contexts/user.contexts';
 import { httpSubmitSignup } from '../apis/backendAPI';
 
 const useSignup = () => {
+  // const { setCurrentUser } = useContext(UserContext);
+
   const submitSignup = async (event) => {
     event.preventDefault();
   
@@ -21,9 +26,12 @@ const useSignup = () => {
       email,
       password,
     }
-    // console.log(user)
-    const response = await httpSubmitSignup(user);    
-    console.log(response);
+
+    const response = await httpSubmitSignup(user);
+    if (response.status === 201)
+      window.location.reload();
+    // const userData = await response.json();
+    // setCurrentUser(userData);
 
     // TODO: set success based on response
   }
