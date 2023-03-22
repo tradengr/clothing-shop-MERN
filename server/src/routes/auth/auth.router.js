@@ -2,7 +2,7 @@ const express = require('express');
 const passport = require('passport');
 
 const {
-  httpGetGoogleCallback,
+  httpSubmitSignin,
   httpGetLogout
 } = require('./auth.controller');
 
@@ -13,14 +13,19 @@ const passportAuthenticateSignIn = passport.authenticate('google', {
 });
 
 const passportAuthenticateCallback = passport.authenticate('google', {
-  failureRedirect: '/signin',
-  successRedirect: '/',
-  session: false
+  failureRedirect: 'http://localhost:3000/signin',
+  successRedirect: 'http://localhost:3000/',
+  session: true,
 });
 
 authRouter.get('/google', passportAuthenticateSignIn);
 
-authRouter.get('/google/callback', passportAuthenticateCallback, httpGetGoogleCallback);
+authRouter.get('/google/callback', passportAuthenticateCallback, (req, res) => {
+
+});
+// authRouter.get('/google/callback', passportAuthenticateCallback, httpGetGoogleCallback);
+
+authRouter.post('/local', passport.authenticate('local'), httpSubmitSignin);
 
 authRouter.get('/logout', httpGetLogout);
 

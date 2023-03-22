@@ -1,39 +1,42 @@
 import useSignup from '../../hooks/useSignup';
-
+import FormInput from '../formInput/formInput.component';
+import Button from '../button/button.component';
+import './signupForm.styles.scss';
 
 const SignupForm = () => {
   const { submitSignup } = useSignup();
   
   return (
-    <div>
-      <h1>I do not have a account</h1>      
-      <h2>Sign up with your email and password</h2>
+    <div className='sign-up-container'>
+      <h2>I do not have a account</h2>      
+      <span>Sign up with your email and password</span>
       <form onSubmit={submitSignup}>
-        <label>Display Name</label>
-        <input 
+        <FormInput
+          label = 'Display Name'
           type='text' 
-          name='displayName' 
+          name='displayName'
           required 
         />
-        <label>Email</label>
-        <input 
+        <FormInput
+          label='Email' 
           type='email' 
-          name='email'  
+          name='email'
           required 
         />
-        <label>Password</label>
-        <input 
+        <FormInput
+          label='Password'
           type='password' 
-          name='password'  
+          name='password'
           required 
         />
-        <label>Confirm Password</label>
-        <input 
+        <FormInput
+          label='Confirm Password'
           type='password' 
-          name='confirmPassword'  
+          name='confirmPassword'
           required 
         />
-        <button type="submit">Sign Up</button>
+        <Button children='Submit' type="submit" className='center' />
+        {/* <Button type="submit">Sign Up</Button> */}
       </form>
     </div>
   );
