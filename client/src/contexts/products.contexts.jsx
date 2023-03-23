@@ -1,5 +1,6 @@
-import React, { createContext, useState } from 'react'
-import PRODUCTS from '../assets/shop-data.json';
+import React, { createContext, useEffect, useState } from 'react'
+
+import { httpGetCategories } from '../apis/backendAPI';
 
 // Actual value/context
 export const ProductsContext = createContext({
@@ -9,10 +10,12 @@ export const ProductsContext = createContext({
 
 // Context Provider
 export function ProductsProvider({ children }) {
-  const [ products, setProducts ] = useState(PRODUCTS);
-  // const value = { products, setProducts }
+  const [ products, setProducts ] = useState([]);
 
   // fetch products here and setProducts
+  useEffect(() => {
+    httpGetCategories().then(res => console.log(res.data));
+  }, []);
 
   return (
     <ProductsContext.Provider value={products}>

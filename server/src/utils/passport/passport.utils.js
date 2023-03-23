@@ -3,7 +3,7 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const bcrypt = require('bcryptjs');
 require('dotenv').config();
 
-const usersModel = require('../../models/users.mongo');
+const usersModel = require('../../models/users/users.mongo');
 
 function passportConfig(passport) {
   const googleConfig = {

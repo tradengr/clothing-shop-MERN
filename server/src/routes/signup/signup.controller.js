@@ -1,4 +1,4 @@
-const { submitSignup } = require('../../models/users.model');
+const { submitSignup } = require('../../models/users/users.model');
 
 async function httpSubmitSignup(req, res) {
   const user = req.body;

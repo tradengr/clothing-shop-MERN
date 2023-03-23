@@ -1,8 +1,10 @@
 import axios from 'axios';
 
+const API_URL = 'http://localhost:8000';
+
 async function httpSubmitSignup(user) {
   try {
-    return await axios.post('http://localhost:8000/signup', user, {
+    return await axios.post(`API_URL/signup`, user, {
       withCredentials: true
     });
   } catch (err) {
@@ -12,7 +14,7 @@ async function httpSubmitSignup(user) {
 
 async function httpSubmitSignin(user) {
   try {
-    return await axios.post('http://localhost:8000/auth/local', user, {
+    return await axios.post(`${API_URL}/auth/local`, user, {
       withCredentials: true
     });
   } catch (err) {
@@ -22,7 +24,7 @@ async function httpSubmitSignin(user) {
 
 async function httpGetUser() {
   try {
-    return await axios.get('http://localhost:8000/user', { withCredentials: true })
+    return await axios.get(`${API_URL}/user`, { withCredentials: true });
   } catch (err) {
     console.error(err);
   } 
@@ -30,11 +32,19 @@ async function httpGetUser() {
 
 async function httpSignoutUser() {
   try {
-    const response = await axios.delete('http://localhost:8000/signout', {
+    const response = await axios.delete(`${API_URL}/signout`, {
       withCredentials: true
     });
     if (response.status === 200)
       window.location.replace('/auth');
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+async function httpGetCategories() {
+  try {
+    return await axios.get(`${API_URL}/categories`, { withCredentials: true });
   } catch (err) {
     console.error(err);
   }
@@ -45,4 +55,5 @@ export {
   httpSubmitSignin,
   httpGetUser,
   httpSignoutUser,
+  httpGetCategories,
 }
