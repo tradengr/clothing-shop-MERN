@@ -5,23 +5,42 @@ export const CartContext = createContext({
   setIsCartOpen: () => {},
   cartItems: [],
   addItemToCart: () => {},
+  reduceItemFromCart: () => {},
+  removeItemFromCart: () => {},
   cartCount: 0,
 });
 
 const addCartItem = (cartItems, product) => {
-  // create a copy of cartItems to not mutate it
   const newCartItems = [...cartItems];
-  // check if cart item already contains the product
   for (let item of newCartItems) {
-    // if found: increment quantity and return newCartItem
     if (item.id === product.id) {
       item.quantity++;
       return newCartItems;
     }
   }
-  // if not found: add new item to cartItems[]
   return newCartItems.concat([{ ...product, quantity: 1 }]);
-  // return new cartItems[]
+}
+
+const reduceCartItem = (cartItems, product) => {
+  const newCartItems = [...cartItems];
+  for (let item of newCartItems) {
+    if (item.id === product.id) {
+      item.quantity -= 1;
+      console.log(item.quantity);
+      if (item.quantity < 1) {
+        console.log('hit')
+        return removeCartItem(cartItems, product);
+      }
+      return newCartItems;
+    }
+  }
+}
+
+const removeCartItem = (cartItems, product) => {
+  const newCartItems = [...cartItems];
+  return newCartItems.filter(item => {
+    return item.id !== product.id;
+  });
 }
 
 export function CartProvider({ children }) {
@@ -33,12 +52,28 @@ export function CartProvider({ children }) {
     setCartItems(addCartItem(cartItems, product));
   }
 
+  const reduceItemFromCart = (product) => {
+    setCartItems(reduceCartItem(cartItems, product))
+  }
+
+  const removeItemFromCart = (product) => {
+    setCartItems(removeCartItem(cartItems, product));
+  }
+
   useEffect(() => {
     const newCartCount = cartItems.reduce((total, item) => total + item.quantity, 0)
     setCartCount(newCartCount);
   }, [cartItems])
   
-  const value = { isCartOpen, setIsCartOpen, cartItems, addItemToCart, cartCount }
+  const value = { 
+    isCartOpen, 
+    setIsCartOpen, 
+    cartItems, 
+    addItemToCart, 
+    reduceItemFromCart,
+    removeItemFromCart, 
+    cartCount 
+  }
   
   return (
     <CartContext.Provider value={value}>
