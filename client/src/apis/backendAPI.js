@@ -4,7 +4,7 @@ const API_URL = 'http://localhost:8000';
 
 async function httpSubmitSignup(user) {
   try {
-    return await axios.post(`API_URL/signup`, user, {
+    return await axios.post(`${API_URL}/signup`, user, {
       withCredentials: true
     });
   } catch (err) {

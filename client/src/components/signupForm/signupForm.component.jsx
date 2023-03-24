@@ -1,6 +1,6 @@
 import useSignup from '../../hooks/useSignup';
 import FormInput from '../formInput/formInput.component';
-import Button from '../button/button.component';
+import { Button } from '../button/button.styles';
 import './signupForm.styles.scss';
 
 const SignupForm = () => {
@@ -35,7 +35,7 @@ const SignupForm = () => {
           name='confirmPassword'
           required 
         />
-        <Button children='Submit' type="submit" className='center' />
+        <Button type='submit'>Submit</Button>
       </form>
     </div>
   );

@@ -1,4 +1,4 @@
-.category-container {
+.category-item-container {
   min-width: 30%;
   height: 350px;
   flex: 1 1 auto;
@@ -64,7 +64,7 @@
     p {
       font-weight: lighter;
       font-size: 16px;
-      text-transform: uppercase;
+      text-transform: capitalize;
     }
   }
 }

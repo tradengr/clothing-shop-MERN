@@ -1,6 +1,6 @@
 import useSignin from '../../hooks/useSignin';
 import FormInput from '../formInput/formInput.component';
-import Button from '../button/button.component';
+import { Button, GoogleButton } from '../button/button.styles';
 import './signinForm.styles.scss';
 
 
@@ -24,10 +24,10 @@ const SigninForm = () => {
           name='password'
           required 
         />
-        <Button children='Sign In' type="submit" />
+        <Button type='submit'>Sign In</Button>
       </form>
       <form action='http://localhost:8000/auth/google'>
-        <Button children='Sign In with Google' buttonType='google' type='submit' />
+        <GoogleButton types='submit'>Sign In With Google</GoogleButton>
       </form>
     </div>
   );

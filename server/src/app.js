@@ -10,22 +10,12 @@ const { passportConfig } = require('./utils/passport/passport.utils');
 const authRouter = require('./routes/auth/auth.router');
 const signupRouter = require('./routes/signup/signup.route');
 const categoriesRouter = require('./routes/categories/categories.router');
+const userRouter = require('./routes/user/user.router');
+const signoutRouter = require('./routes/signout/signout.router');
 
 const app = express();
 
-// passportConfig(passport);
-
-// function authenticate(req, res, next) {
-//   if (!req.isAuthenticated)
-//     return res.redirect('/signin');
-//   next();
-// }
-// function reAuthenticate(req, res, next) {
-//   if (req.isAuthenticated)
-//     return res.redirect('/');
-//   next();
-// }
-
+// Middlewares
 // app.use(helmet());
 app.use(express.json());
 app.use(cors({
@@ -33,44 +23,25 @@ app.use(cors({
   credentials: true,
 }));
 app.use(session({
-  secret: 'supersecret',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
   cookie: { maxAge: 24 * 60 * 60 * 1000 }
 }));
+passportConfig(passport);
 app.use(passport.initialize());
 app.use(passport.session());
-passportConfig(passport);
-// app.use(express.static(path.join(__dirname, '..', 'public')));
-app.use('/auth', authRouter);
+app.use(express.static(path.join(__dirname, '..', 'public')));
+
+// Routes
 app.use('/signup', signupRouter);
+app.use('/auth', authRouter);
+app.use('/user', userRouter);
+app.use('/signout', signoutRouter);
 app.use('/categories', categoriesRouter);
 
-app.get('/user', (req, res) => {
-  return res.status(200).json(req.user);
-})
-
-app.delete('/signout', (req, res, next) => {
-  req.logOut(err => {
-    if (err) return next(err);
-    res.status(200).json({ ok: 'Success' });
-  });
-})
-
-// const Category = require('./models/categories/categories.mongo');
-// app.get('/categories', async(req, res) => {
-//   const categories = await Category.find({}, { _id: 0, __v: 0 });
-//   const categoryMap = categories.reduce((acc, collection) => {
-//     const { title, items } = collection;
-//     acc[title.toLowerCase()] = items;
-//     return acc;
-//   }, {});
-//   return res.json(categoryMap);
-// })
-
-
-// app.get('/*', (req, res) => {
-//   return res.status(200).sendFile(path.join(__dirname, '..', 'public', 'index.html'));
-// });
+app.get('/*', (req, res) => {
+  return res.status(200).sendFile(path.join(__dirname, '..', 'public', 'index.html'));
+});
 
 module.exports = app;

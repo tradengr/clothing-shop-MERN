@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import { CartContext } from '../../contexts/cart.context';
-import Button from '../button/button.component';
+import { InvertedButton } from '../button/button.styles';
+
 import './productCard.styles.scss';
 
 export default function ProductCard({ product }) {
@@ -16,7 +17,7 @@ export default function ProductCard({ product }) {
         <span className='name'>{name}</span>
         <span className='price'>{`$${price}`}</span>
       </div>
-      <Button buttonType='inverted' onClick={handleAddItemToCart}>Add To Cart</Button>
+      <InvertedButton onClick={handleAddItemToCart}>Add To Cart</InvertedButton>
     </div>
   );
 }

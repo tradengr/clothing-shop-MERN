@@ -44,6 +44,7 @@ function passportConfig(passport) {
   passport.use(new LocalStrategy({ usernameField: 'email' }, verifyLocal));
   passport.use(new GoogleStrategy(googleConfig, verifyGoogle));
   passport.serializeUser((user, done) => done(null, user.id));
+  passport.deserializeUser((id, done) => done(null, id));
   // passport.deserializeUser(async(id, done) => {
   //   try {
   //     const user = await usersModel.findOne({ _id: id });
@@ -52,7 +53,6 @@ function passportConfig(passport) {
   //     done(err);
   //   }
   // });
-  passport.deserializeUser((id, done) => done(null, id));
 }
 
 module.exports = { passportConfig };

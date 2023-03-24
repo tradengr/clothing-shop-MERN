@@ -1,4 +1,6 @@
-.button-container {
+import styled from 'styled-components';
+
+export const Button = styled.button`
   min-width: 165px;
   width: auto;
   height: 50px;
@@ -22,26 +24,26 @@
     color: black;
     border: 1px solid black;
   }
+`;
 
-  &.google-button {
-    background-color: #4285f4;
+export const GoogleButton = styled(Button)`
+  background-color: #4285f4;
+  color: white;
+
+  &:hover {
+    background-color: #357ae8;
+    border: none;
+  }
+`;
+
+export const InvertedButton = styled(Button)`
+  background-color: white;
+  color: black;
+  border: 1px solid black;
+
+  &:hover {
+    background-color: black;
     color: white;
-
-    &:hover {
-      background-color: #357ae8;
-      border: none;
-    }
+    border: none;
   }
-
-  &.inverted-button {
-    background-color: white;
-    color: black;
-    border: 1px solid black;
-
-    &:hover {
-      background-color: black;
-      color: white;
-      border: none;
-    }
-  }
-}
+`;
