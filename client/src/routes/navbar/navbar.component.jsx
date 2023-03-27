@@ -12,14 +12,7 @@ import './navbar.styles.scss';
 
 const NavBar = () => {
   const currentUser = useContext(UserContext);
-  console.log(currentUser)
-
   const { isCartOpen } = useContext(CartContext)
-
-  // const viewCart = (event) => {
-  //   // setIsCartOpen(!isCartOpen);
-  //   console.log('click')
-  // }
 
   return (
     <>
@@ -37,9 +30,9 @@ const NavBar = () => {
           }
           <CartIcon />
         </div>
-        {isCartOpen ? (<CartDropdown/>) : null}
+        {/* {isCartOpen ? (<CartDropdown/>) : null} */}
+        {isCartOpen && (<CartDropdown/>)}
       </div>
-      {/* <Outlet /> */}
     </>
   )
 }
