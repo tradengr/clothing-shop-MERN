@@ -1,17 +1,18 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-import { UserContext } from "../../contexts/user.contexts";
 import { CartContext } from "../../contexts/cart.context";
 import { httpSignoutUser } from "../../apis/backendAPI";
 import { ReactComponent as Logo } from '../../assets/crown.svg';
 import CartIcon from "../../components/cartIcon/cartIcon.component";
 import CartDropdown from "../../components/cartDropdown/cartDropdown.component";
+import { selectCurrentUser } from "../../redux/user/user.selector";
 
 import './navbar.styles.scss';
 
 const NavBar = () => {
-  const currentUser = useContext(UserContext);
+  const currentUser = useSelector(selectCurrentUser);
   const { isCartOpen } = useContext(CartContext)
 
   return (
@@ -30,7 +31,6 @@ const NavBar = () => {
           }
           <CartIcon />
         </div>
-        {/* {isCartOpen ? (<CartDropdown/>) : null} */}
         {isCartOpen && (<CartDropdown/>)}
       </div>
     </>

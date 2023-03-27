@@ -1,15 +1,30 @@
-import { 
-  Routes, 
-  Route, 
-} from 'react-router-dom';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { Routes, Route, } from 'react-router-dom';
 
 import NavBar from './routes/navbar/navbar.component';
 import Home from "./routes/home/home.component";
 import Authentication from './routes/authentication/authentication.component';
 import Shop from './routes/shop/shop.component';
 import Checkout from './routes/checkout/checkout.component';
+import { httpGetUser } from './apis/backendAPI';
+import { httpGetCategories } from './apis/backendAPI';
+import { setCurrentUser } from './redux/user/user.action';
+import { setCategoriesMap } from './redux/categories/categories.action';
 
 const App = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    httpGetUser().then(res => dispatch(setCurrentUser(res.data)));
+    // eslint-disable-next-line
+  }, []);
+  
+  useEffect(() => {
+    httpGetCategories().then(res => dispatch(setCategoriesMap(res.data)));
+    // eslint-disable-next-line
+  }, []);
+
   return (
     <>
       <NavBar/>
