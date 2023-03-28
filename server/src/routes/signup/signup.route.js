@@ -1,8 +1,6 @@
-const express = require('express');
+const signupRouter = require('express').Router();
 
 const { httpSubmitSignup } = require('./signup.controller');
-
-const signupRouter = express.Router();
 
 signupRouter.post('/', httpSubmitSignup);
 

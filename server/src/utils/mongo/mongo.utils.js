@@ -12,4 +12,4 @@ async function connectMongo() {
   await mongoose.connect(process.env.MONGO_URL);
 }
 
-module.exports = { connectMongo };
+module.exports = connectMongo;

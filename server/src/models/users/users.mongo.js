@@ -11,7 +11,8 @@ const usersSchema = new Schema({
   },
   createdAt: {
     type: Date,
-    default: new Date(),
+    default: Date.now(),
+    immutable: true,
     required: true
   },
   password: {
