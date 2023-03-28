@@ -1,19 +1,18 @@
-import React, { useContext } from 'react'
-import { CartContext } from '../../contexts/cart.context';
+import React from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+
+import { addItemToCart, reduceItemFromCart, removeItemFromCart } from '../../redux/cart/cart.action';
+import { selectCartItems } from '../../redux/cart/cart.selector';
 
 import './checkoutItem.styles.scss';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-// import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
-// import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
 
-
-export default function CheckoutItem({ cartItem }) {
-  const { imageUrl, name, quantity, price } = cartItem;
-  const { addItemToCart, reduceItemFromCart, removeItemFromCart } = useContext(CartContext);
-
-  const handleAddItem = () => addItemToCart(cartItem);
-  const handleReduceItem = () => reduceItemFromCart(cartItem);
-  const handleRemoveItem = () => removeItemFromCart(cartItem);
+export default function CheckoutItem({ product }) {
+  const { imageUrl, name, quantity, price } = product;
+  const cartItems = useSelector(selectCartItems);
+  const dispatch = useDispatch();
+  const handleAddItem = () => dispatch(addItemToCart(cartItems, product));
+  const handleReduceItem = () => dispatch(reduceItemFromCart(cartItems, product));
+  const handleRemoveItem = () => dispatch(removeItemFromCart(cartItems, product));
     
   return (
     <div className='checkout-item-container'>
