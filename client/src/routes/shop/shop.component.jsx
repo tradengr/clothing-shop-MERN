@@ -4,13 +4,12 @@ import { Routes, Route } from 'react-router-dom';
 
 import CategoriesPreview from '../categoriesPreview/categoriesPreview.component';
 import Category from '../category/category.component';
-import { httpGetCategories } from '../../apis/backendAPI';
-import { setCategoriesMap } from '../../redux/categories/categories.action';
+import { fetchCategoriesAsync } from '../../redux/categories/categories.action';
 
 export default function Shop() {
   const dispatch = useDispatch();
   useEffect(() => {
-    httpGetCategories().then(res => dispatch(setCategoriesMap(res.data)));
+    dispatch(fetchCategoriesAsync());
     // eslint-disable-next-line
   }, []);
 
@@ -23,3 +22,5 @@ export default function Shop() {
     </>
   );
 }
+
+ 
