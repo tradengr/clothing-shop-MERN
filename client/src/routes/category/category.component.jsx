@@ -12,7 +12,7 @@ export default function Category() {
   const categoriesMap = useSelector(selectCategoriesMap);
   const [ products, setProducts ] = useState(categoriesMap[category]);
 
-  useEffect(() => {
+  useEffect(() => { 
     setProducts(categoriesMap[category]);
   }, [categoriesMap, category]);
 
@@ -23,6 +23,5 @@ export default function Category() {
         {products && products.map(product => <ProductCard key={product.id} product={product} /> )}
       </div>
     </>
-
   );
 } 
