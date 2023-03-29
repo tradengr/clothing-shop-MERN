@@ -24,7 +24,9 @@ async function httpSubmitSignin(user) {
 
 async function httpGetUser() {
   try {
-    return await axios.get(`${API_URL}/user`, { withCredentials: true });
+    const response = await axios.get(`${API_URL}/user`, { withCredentials: true });
+    const user = response.data;
+    return user;
   } catch (err) {
     console.error(err);
   } 

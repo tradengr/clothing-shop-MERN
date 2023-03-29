@@ -14,7 +14,7 @@ const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    httpGetUser().then(res => dispatch(setCurrentUser(res.data)));
+    httpGetUser().then(user => dispatch(setCurrentUser(user)));
     // eslint-disable-next-line
   }, []);
 
