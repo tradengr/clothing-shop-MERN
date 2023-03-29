@@ -2,7 +2,6 @@ import React from 'react'
 import { useSelector } from 'react-redux';
 
 import { selectCartItems, selectCartTotalPrice } from '../../redux/cart/cart.selector';
-
 import CheckoutItem from '../../components/checkoutItem/checkoutItem.component';
 
 import './checkout.styles.scss';

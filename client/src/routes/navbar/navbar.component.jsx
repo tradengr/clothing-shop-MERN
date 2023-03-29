@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-import { httpSignoutUser } from "../../apis/backendAPI";
-import { ReactComponent as Logo } from '../../assets/crown.svg';
 import CartIcon from "../../components/cartIcon/cartIcon.component";
 import CartDropdown from "../../components/cartDropdown/cartDropdown.component";
+import { ReactComponent as Logo } from '../../assets/crown.svg';
 import { selectCurrentUser } from "../../redux/user/user.selector";
 import { selectIsCartOpen } from "../../redux/cart/cart.selector";
+import { httpSignoutUser } from "../../apis/backendAPI";
 
 import './navbar.styles.scss';
 

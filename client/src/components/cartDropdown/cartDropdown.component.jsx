@@ -11,7 +11,6 @@ import './cartDropdown.styles.scss';
 
 export default function CartDropdown() {
   const cartItems = useSelector(selectCartItems);
-
   const navigate = useNavigate();
   const navigateToCheckout = () => navigate('/checkout');
 
