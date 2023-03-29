@@ -7,7 +7,7 @@ export const selectCategoriesMap = createSelector(
   (categories) => categories.categoriesMap
 )
 
-// export const selectCategoriesMap = state => {
-//   console.log('select')
-//   return state.categories.categoriesMap
-// }
+export const selectCategoriesIsLoading = createSelector(
+  [selectCategoriesReducer],
+  (categories) => categories.isLoading
+)
