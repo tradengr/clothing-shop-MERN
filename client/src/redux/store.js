@@ -1,13 +1,28 @@
 // Combined place where all our redux process happens, where our state lives,
 // where we receives action and dispatch them into reducers to update state
 import { compose, createStore, applyMiddleware } from 'redux';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 import logger from 'redux-logger';
 
 import { rootReducer } from './rootReducer';
 
-// Little library helpers that run before an action hits a reducer
-  // action -> middleware -> reducer
-const middleWares = [ logger ];
-const composedEnhancers = compose(applyMiddleware(...middleWares));
+const productionEnv = process.env.NODE_ENV === 'production';
 
-export const store = createStore(rootReducer, undefined, composedEnhancers);
+const persistConfig = {
+  key: 'root',
+  storage,
+  blacklist: [ 'user' ],
+};
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+const middleWares = [ !productionEnv && logger ].filter(Boolean);
+const composeEnhancer = ( 
+  !productionEnv && window && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ 
+  ) || compose;
+
+const composedEnhancers = composeEnhancer(applyMiddleware(...middleWares));
+
+export const store = createStore(persistedReducer, undefined, composedEnhancers);
+export const persistor = persistStore(store);
