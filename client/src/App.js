@@ -8,13 +8,17 @@ import Authentication from './routes/authentication/authentication.component';
 import Shop from './routes/shop/shop.component';
 import Checkout from './routes/checkout/checkout.component';
 import { httpGetUser } from './apis/backendAPI';
-import { setCurrentUser } from './redux/user/user.action';
+import { checkUserSession, setCurrentUser } from './redux/user/user.action';
 
 const App = () => {
   const dispatch = useDispatch();
 
+  // useEffect(() => {
+  //   httpGetUser().then(user => dispatch(setCurrentUser(user)));
+  //   // eslint-disable-next-line
+  // }, []);
   useEffect(() => {
-    httpGetUser().then(user => dispatch(setCurrentUser(user)));
+    dispatch(checkUserSession());
     // eslint-disable-next-line
   }, []);
 

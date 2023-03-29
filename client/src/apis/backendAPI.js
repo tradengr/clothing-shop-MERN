@@ -46,7 +46,9 @@ async function httpSignoutUser() {
 
 async function httpGetCategories() {
   try {
-    return await axios.get(`${API_URL}/categories`, { withCredentials: true });
+    const response = await axios.get(`${API_URL}/categories`, { withCredentials: true });
+    const categories = response.data;
+    return categories;
   } catch (err) {
     console.error(err);
   }
