@@ -7,14 +7,12 @@ import Home from "./routes/home/home.component";
 import Authentication from './routes/authentication/authentication.component';
 import Shop from './routes/shop/shop.component';
 import Checkout from './routes/checkout/checkout.component';
-import { httpGetUser } from './apis/backendAPI';
-import { setCurrentUser } from './redux/user/user.action';
+import { checkUserSession } from './redux/user/user.action';
 
 const App = () => {
   const dispatch = useDispatch();
-
   useEffect(() => {
-    httpGetUser().then(res => dispatch(setCurrentUser(res.data)));
+    dispatch(checkUserSession());
     // eslint-disable-next-line
   }, []);
 

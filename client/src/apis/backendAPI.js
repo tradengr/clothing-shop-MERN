@@ -22,9 +22,15 @@ async function httpSubmitSignin(user) {
   }
 }
 
+function httpGoogleSignin() {
+  window.open('http://localhost:8000/auth/google', '_self');
+}
+
 async function httpGetUser() {
   try {
-    return await axios.get(`${API_URL}/user`, { withCredentials: true });
+    const response = await axios.get(`${API_URL}/user`, { withCredentials: true });
+    const user = response.data;
+    return user;
   } catch (err) {
     console.error(err);
   } 
@@ -44,7 +50,9 @@ async function httpSignoutUser() {
 
 async function httpGetCategories() {
   try {
-    return await axios.get(`${API_URL}/categories`, { withCredentials: true });
+    const response = await axios.get(`${API_URL}/categories`, { withCredentials: true });
+    const categories = response.data;
+    return categories;
   } catch (err) {
     console.error(err);
   }
@@ -53,6 +61,7 @@ async function httpGetCategories() {
 export {
   httpSubmitSignup,
   httpSubmitSignin,
+  httpGoogleSignin,
   httpGetUser,
   httpSignoutUser,
   httpGetCategories,
