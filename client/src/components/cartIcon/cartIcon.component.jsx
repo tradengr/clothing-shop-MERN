@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 
 import { ReactComponent as CartIconLogo } from '../../assets/shopping-bag.svg';
-import { toggleCart } from '../../redux/cart/cart.action';
+import { toggleCart } from '../../redux/cart/cart.slice';
 import { selectCartCount, selectIsCartOpen } from '../../redux/cart/cart.selector';
 
 import './cartIcon.styles.scss';

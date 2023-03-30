@@ -5,7 +5,7 @@ import { Routes, Route } from 'react-router-dom';
 import CategoriesPreview from '../categoriesPreview/categoriesPreview.component';
 import Category from '../category/category.component';
 import { httpGetCategories } from '../../apis/backendAPI';
-import { setCategoriesMap } from '../../redux/categories/categories.action';
+import { setCategoriesMap } from '../../redux/categories/categories.slice';
 
 export default function Shop() {
   const dispatch = useDispatch();
