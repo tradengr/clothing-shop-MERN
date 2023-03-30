@@ -12,7 +12,9 @@ async function httpSubmitSignup(req, res) {
 
   const userCreated = await submitSignup(user);
   if (!userCreated) return res.status(400).json({ error: 'User already exists' });
-  return res.status(201).json({ ok: 'User was registered successfully' });
+  // return res.status(201).json({ ok: 'User was registered successfully' });
+  console.log(req.user);
+  return res.status(201).json(req.user);
 }
 
 module.exports = {

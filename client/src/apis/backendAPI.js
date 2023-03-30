@@ -22,6 +22,10 @@ async function httpSubmitSignin(user) {
   }
 }
 
+function httpGoogleSignin() {
+  window.open('http://localhost:8000/auth/google', '_self');
+}
+
 async function httpGetUser() {
   try {
     const response = await axios.get(`${API_URL}/user`, { withCredentials: true });
@@ -57,6 +61,7 @@ async function httpGetCategories() {
 export {
   httpSubmitSignup,
   httpSubmitSignin,
+  httpGoogleSignin,
   httpGetUser,
   httpSignoutUser,
   httpGetCategories,

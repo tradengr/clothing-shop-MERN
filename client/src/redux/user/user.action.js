@@ -13,8 +13,11 @@ export const googleSignIn = () => {
   return createAction(USER_ACTION_TYPES.GOOGLE_SIGN_IN);
 }
 
-export const emailSignIn = (email, password) => {
-  return createAction(USER_ACTION_TYPES.EMAIL_SIGN_IN, { email, password });
+// export const emailSignIn = (email, password) => {
+//   return createAction(USER_ACTION_TYPES.EMAIL_SIGN_IN, { email, password });
+// }
+export const emailSignIn = (user) => {
+  return createAction(USER_ACTION_TYPES.EMAIL_SIGN_IN, user);
 }
 
 export const signInSuccess = (user) => {

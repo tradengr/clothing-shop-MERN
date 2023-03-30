@@ -1,7 +1,8 @@
 const passport = require('passport');
 
 function httpSubmitSignin(req, res) {
-  return res.status(200).json({ ok: 'Successfully Authenticated' });
+  // return res.status(200).json({ ok: 'Successfully Authenticated' });
+  return res.status(200).json(req.user);
 }
 
 const passportAuthenticateSignIn = passport.authenticate('google', {

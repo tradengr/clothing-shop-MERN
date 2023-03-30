@@ -1,6 +1,8 @@
 import useSignin from '../../hooks/useSignin';
 import FormInput from '../formInput/formInput.component';
 import { Button, GoogleButton } from '../button/button.styles';
+import { httpGoogleSignin } from '../../apis/backendAPI';
+
 import './signinForm.styles.scss';
 
 
@@ -26,9 +28,10 @@ const SigninForm = () => {
         />
         <Button type='submit'>Sign In</Button>
       </form>
-      <form action='http://localhost:8000/auth/google'>
-        <GoogleButton types='submit'>Sign In With Google</GoogleButton>
-      </form>
+      {/* <form action='http://localhost:8000/auth/google'>
+        <GoogleButton type='submit'>Sign In With Google</GoogleButton>
+      </form> */}
+      <GoogleButton onClick={httpGoogleSignin}>Sign In With Google</GoogleButton>
     </div>
   );
 };
