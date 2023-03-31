@@ -1,6 +1,10 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model, Types } = require('mongoose');
 
 const usersSchema = new Schema({
+  googleId: {
+    type: String,
+    required: false
+  },
   displayName: {
    type: String,
    required: true 

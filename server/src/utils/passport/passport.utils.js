@@ -27,15 +27,17 @@ function passportConfig(passport) {
   async function verifyGoogle(accessToken, refreshToken, profile, done) {
     const email = profile.emails[0].value;
     const displayname = profile.displayName;
+    const googleId = profile.id;
     try {
-      await usersModel.findOneAndUpdate(
+      const currentUser = await usersModel.findOneAndUpdate(
         { email: email }, 
         { displayName: displayname,
           email: email,
         }, 
         { upsert: true }
       );
-      done(null, profile);
+      // done(null, profile);
+      done(null, currentUser);
     } catch (err) {
       done(err);
     }
@@ -44,15 +46,18 @@ function passportConfig(passport) {
   passport.use(new LocalStrategy({ usernameField: 'email' }, verifyLocal));
   passport.use(new GoogleStrategy(googleConfig, verifyGoogle));
   passport.serializeUser((user, done) => done(null, user.id));
-  passport.deserializeUser((id, done) => done(null, id));
-  // passport.deserializeUser(async(id, done) => {
-  //   try {
-  //     const user = await usersModel.findOne({ _id: id });
-  //     done(null, user);
-  //   } catch (err) {
-  //     done(err);
-  //   }
-  // });
+  passport.deserializeUser(async(id, done) => {
+    try {
+      const user = await usersModel.findById(id);
+      const basicUserInfo = {
+        displayName: user.displayName,
+        email: user.email,
+      }
+      done(null, basicUserInfo);
+    } catch (err) {
+      done(err);
+    }
+  });
 }
 
 module.exports = { passportConfig };
