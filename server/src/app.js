@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 // const helmet = require('helmet');
 const cors = require('cors');
@@ -31,7 +32,7 @@ app.use(session({
 passportConfig(passport);
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(express.static(path.join(__dirname, '..', 'public')));
+// app.use(express.static(path.join(__dirname, '..', 'public')));
 
 // Routes
 app.use('/signup', signupRouter);
@@ -40,8 +41,26 @@ app.use('/user', userRouter);
 app.use('/signout', signoutRouter);
 app.use('/categories', categoriesRouter);
 
-app.get('/*', (req, res) => {
-  return res.status(200).sendFile(path.join(__dirname, '..', 'public', 'index.html'));
+// -----------------------------------------------------------------
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+app.post('/payment', async (req, res) => {
+  const { amount } = req.body;
+  try {
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount,
+      currency: 'usd',
+      payment_method_types: [ 'card' ],
+    });
+    return res.status(200).json(paymentIntent);
+  } catch (err) {
+    return res.status(400).json(err);
+  }
 });
+// -----------------------------------------------------------------
+
+
+// app.get('/*', (req, res) => {
+//   return res.status(200).sendFile(path.join(__dirname, '..', 'public', 'index.html'));
+// });
 
 module.exports = app;
